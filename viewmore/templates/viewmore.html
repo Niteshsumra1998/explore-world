@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Destination Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      margin-top: 100px;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .details-container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .destination-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .description {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #222;
+      border-bottom: 2px solid #007bff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    ul.itinerary {
+      list-style: disc;
+      padding-left: 20px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .packages {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .packages th,
+    .packages td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .packages th {
+      background-color: #f0f0f0;
+    }
+
+    .btn-book {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-book:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="details-container">
+    <img src="{% static 'images/' %}{{ destimg }}" alt="Goa" class="banner-img">
+
+
+<div class="destination-title">{{ destnm }}</div>
+<div class="description">{{ destdes }}</div>
+
+
+      <div class="section-title">Itinerary Highlights</div>
+      <ul class="itinerary">
+        {% for destf in dfeat %}
+        <li>Day {{forloop.counter}}: {{ destf.0 }}</li>
+        {% endfor %}
+      </ul>
+    
+
+      <div class="section-title">Packages Available</div>
+      <table class="packages">
+        <thead>
+          <tr>
+            <th>Days</th>
+            <th>Travel Method</th>
+            <th>Stay</th>
+            <th>Taxes</th>
+            <th>Total Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dpackdays,dpacktravel,dpackstay,dpackprice,destid,packid in dpack %}
+          <form method="post">
+            {% csrf_token %}
+          <tr>
+
+            <td>{{ dpackdays }} Days <input type="hidden" id="dtid" value="{{ destid }}" name="dtid"/> <input type="hidden" id="pkid" value="{{ packid }}" name="pkid"/>  <input type="hidden" id="vdays" value="{{ dpackdays }}" name="vdays"/><input type="hidden" id="pprice" value="{{ dpackprice }}" name="pprice"/></td>
+            <td>{{ dpacktravel }}</td>
+            <td>{{ dpackstay }}</td>
+            <td>Included</td>
+            <td>₹ {{ dpackprice }}</td>
+            <td><input type="submit" class="btn-book" value="Book Now"></td>
+            <!-- href="{% url 'dbooknow' %}" style="text-decoration: none;" -->
+         
+          </tr>
+        </form>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
+{% endblock %}

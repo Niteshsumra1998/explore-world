@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'Css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="video-background">
+  <video autoplay loop id="bg-video">
+    <source src="../static/Images/India.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <button id="mute-btn">🔇</button>
+
+  <div class="video-overlay-content">
+    {% if candidatename %}
+    <h1>Welcome {{candidatename | capfirst }} to Explore India</h1>
+    {% else %}
+    <h1>Welcome to Explore India</h1>
+    {% endif %}
+    <p>Discover the beauty and culture across the nation.</p>
+    {% if candidatename %}
+    <a href="{% url 'destinations' %}" class="btn-explore">Explore Destinations</a>
+    {% else %}
+    <a href="{% url 'loginpage' %}" class="btn-explore">Explore Destinations</a>
+    {% endif %}
+  </div>
+</div>
+
+    <section class="image1" id="home">
+        <div class="ptext">
+          {% if candidatename %}
+          <a href="{% url 'mount_views' %}" target="_blank" class="no-underline">
+            <span class="textbg">Explore the Majestic Mountains </span></a>
+            {% else %}
+            <a href="{% url 'loginpage' %}" target="_blank" class="no-underline">
+            <span class="textbg">Explore the Majestic Mountains </span></a>
+            {% endif %}
+        </div>
+      </section>
+
+      <section class="section section-light">
+        <p>
+          Activities: Trekking through scenic trails. Camping under the stars in
+          serene mountain valleys. Rock climbing and rappelling for adventure
+          seekers. Bird watching and photography of rare wildlife. Visiting
+          waterfalls, natural springs, and glacial lakes.
+          <br />
+          Experiences: Witness breathtaking sunrise and sunset views from mountain
+          peaks. Enjoy local mountain cuisine and cultural performances. Relax
+          with yoga and meditation amidst nature.
+          <br />
+          What We Provide: Guided trekking tours with experienced instructors. All
+          camping equipment (tents, sleeping bags, etc.). Safety gear for
+          adventure sports. Transportation to remote mountain locations.
+          Personalized itineraries for individuals and groups.
+        </p>
+      </section>
+      <section class="image2">
+        <div class="ptext">
+          {% if candidatename %}
+          <a href="{% url 'wildlife_views' %}" target="_blank" class="no-underline">
+          <span class="textbg">Discover the Wilderness</span></a>
+            {% else %}
+          <a href="{% url 'loginpage' %}" target="_blank" class="no-underline">
+          <span class="textbg">Discover the Wilderness</span></a>
+          {% endif %}
+        </div>
+      </section>
+      <section class="section section-dark">
+        <p>
+          Activities: Safari rides to explore diverse wildlife. Night treks to
+          experience the jungle after dark. Nature walks to discover exotic flora
+          and fauna. Zip-lining through dense forests for thrill-seekers. Canoeing
+          or river rafting (if available near jungle areas).
+          <br />
+          Experiences: Spot wild animals like tigers, elephants, or leopards in
+          their natural habitat. Listen to the calming sounds of the
+          jungle—birdsong, rustling leaves, and flowing streams. Interact with
+          indigenous tribes and learn about their traditions.
+          <br />
+          What We Provide: Comfortable and safe safari rides with expert guides.
+          Wildlife spotting equipment (binoculars, cameras, etc.). Eco-friendly
+          accommodations within or near the jungle. Education on wildlife
+          conservation and responsible tourism.
+        </p>
+      </section>
+      <section class="image3">
+        <div class="ptext">
+          {% if candidatename %}
+          <a href="{% url 'sea_views' %}" target="_blank" class="no-underline">
+            <span class="textbg">Dive Into the Deep Blue</span></a>
+            {% else %}
+            <a href="{% url 'loginpage' %}" target="_blank" class="no-underline">
+              <span class="textbg">Dive Into the Deep Blue</span></a>
+              {% endif %}
+        </div>
+      </section>
+      <section class="section section-dark">
+        <p>
+          Activities: Scuba diving and snorkeling to explore vibrant coral reefs.
+          Kayaking, paddleboarding, and jet skiing for water sports lovers.
+          Deep-sea fishing and boat tours. Relaxing on pristine beaches or private
+          islands.
+          <br />
+          Experiences: Witness marine life, including dolphins, sea turtles, and
+          colorful fish. Enjoy breathtaking sunset cruises with refreshments.
+          Discover underwater shipwrecks or caves for adventurous dives. Relish
+          fresh seafood prepared by local chefs.
+          <br />
+          What We Provide: Certified diving instructors and safety equipment.
+          Luxury or budget-friendly stays near the ocean. Ocean-friendly
+          activities promoting sustainability. A well-curated itinerary tailored
+          to your preferences.
+        </p>
+      </section>
+      <script>
+        const video = document.getElementById("bg-video");
+        const muteBtn = document.getElementById("mute-btn");
+        video.muted = true;
+      
+        muteBtn.addEventListener("click", () => {
+          video.muted = !video.muted;
+          muteBtn.textContent = video.muted ? "🔇" : "🔊";
+        });
+      </script>
+{% endblock %}
+{% block modal %}
+{% endblock %}

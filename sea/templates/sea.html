@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'sea.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="hero-section-seas">
+    <div class="overlay">
+        <h1>Dive Into the Deep Blue</h1>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row g-4 justify-content-center">
+
+        <!-- Card 1 -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card sea-card h-100">
+                <img src="{% static 'images/goa_beach.jpg' %}" class="card-img-top" alt="Goa Beach">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Goa Beaches, Goa</h5>
+                    <p class="card-text">3 Days: Baga, Anjuna, Palolem Beaches.<br>₹8,999 per person</p>
+                    <a href="#" class="btn btn-info mt-auto">Book Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card sea-card h-100">
+                <img src="{% static 'images/andaman.jpg' %}" class="card-img-top" alt="Andaman">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Andaman Islands</h5>
+                    <p class="card-text">4 Days: Radhanagar Beach, Havelock, Scuba Diving.<br>₹18,999 per person</p>
+                    <a href="#" class="btn btn-info mt-auto">Book Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card sea-card h-100">
+                <img src="{% static 'images/kerala_beach.jpg' %}" class="card-img-top" alt="Kerala Beaches">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Kerala Beaches</h5>
+                    <p class="card-text">3 Days: Kovalam, Varkala, Alleppey.<br>₹10,499 per person</p>
+                    <a href="#" class="btn btn-info mt-auto">Book Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card sea-card h-100">
+                <img src="{% static 'images/pondicherry.jpg' %}" class="card-img-top" alt="Pondicherry Beach">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Pondicherry</h5>
+                    <p class="card-text">3 Days: Serenity Beach, Paradise Beach, Promenade.<br>₹9,499 per person</p>
+                    <a href="#" class="btn btn-info mt-auto">Book Now</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

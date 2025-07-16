@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4">
+        
+        <div class="modal-header bg-gradient text-white" style="background: linear-gradient(45deg, #0d6efd, #6610f2); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-geo-alt-fill me-2"></i>Passanger Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+        
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Traveller Contact No:</label>
+                <input type="tel" class="form-control bg-light" id="exampleFormControlInput1" name="ttel">
+              </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Traveller Address:</label>
+                <textarea class="form-control bg-light" id="exampleFormControlTextarea1" rows="3" name="tadd"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Select No of Travellers :</label>
+                <select id="quantity" name="quantity" onchange="generateInputs()" class="form-control bg-light">
+                  <option value="0">-- Select --</option>
+                  {% for i in quantity_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
+                <input type="hidden" id="journeyDuration" value="{{ pdays }}"> <!-- example: 5 days -->
+                <input type="hidden" id="pricePerPerson" value="{{ pricep }}">
+
+            </div>
+            <div id="input-container">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Total Amount:</label>
+                <input type="text" id="totalAmount" name="totalAmount" class="form-control bg-light" readonly>
+              </div>
+              
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" href="{% url 'home' %}">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save & Checkout"/>
+          <!-- href="{% url 'razorpay_views' %} -->
+        </div>
+      </div>
+    </div>d
+</form>
+  </div>
+  
+    <script type="text/javascript">
+document.addEventListener("DOMContentLoaded",function(){
+        var modal=new bootstrap.Modal(document.getElementById("exampleModal"));
+        modal.show();
+        document.getElementById('exampleModal').addEventListener
+        ('hidden.bs.modal',function(){
+          window.location.href=document.referrer;
+        });
+    });
+
+    function generateInputs() {
+    const quantity = parseInt(document.getElementById("quantity").value); 
+    const container = document.getElementById("input-container");
+    const pricePerPerson = parseFloat(document.getElementById("pricePerPerson").value);
+    container.innerHTML = ""; // Clear old inputs
+
+    for (let i = 1; i <= quantity; i++) {
+      const inputGroup = document.createElement("div");
+      inputGroup.class="mb-3";
+      inputGroup.innerHTML = `
+      <label for="passengerName${i}" class="form-label">Passenger ${i} Name:</label>
+      <input type="text" name="passengerName${i}" id="passengerName${i}" class="form-control mb-2" required>
+
+      <label for="passengerAge${i}" class="form-label">Passenger ${i} Age:</label>
+      <input type="number" name="passengerAge${i}" id="passengerAge${i}" class="form-control" required>
+      <hr style="border: 3px solid red;">
+    `;
+      container.appendChild(inputGroup);
+    }
+     // Create Journey Date input after all passengers
+     const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
+
+  const journeyDuration = parseInt(document.getElementById("journeyDuration").value);
+  const endDate = new Date(today);
+  endDate.setDate(endDate.getDate() + journeyDuration);
+  const endDateStr = endDate.toISOString().split("T")[0];
+
+  const dateGroup = document.createElement("div");
+  dateGroup.className = "mb-3";
+
+  dateGroup.innerHTML = `
+    <label for="journeyDate" class="form-label">Journey Start Date:</label>
+    <input type="date" id="journeyDate" name="journeyDate" class="form-control mb-2" value="${todayStr}" min="${todayStr}">
+
+    <label for="journeyEndDate" class="form-label">Journey End Date:</label>
+    <input type="date" id="journeyEndDate" name="journeyEndDate" class="form-control" value="${endDateStr}" readonly>
+  `;
+
+  container.appendChild(dateGroup);
+
+  // Function to calculate end date based on start + duration
+  function updateEndDate() {
+    const startDate = new Date(document.getElementById("journeyDate").value);
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + journeyDuration);
+    const endDateStr = endDate.toISOString().split("T")[0];
+    document.getElementById("journeyEndDate").value = endDateStr;
+  }
+
+  // Initial end date setup
+  updateEndDate();
+
+  // Update end date on journey date change
+  document.getElementById("journeyDate").addEventListener("change", updateEndDate);
+
+  updateTotalAmount(quantity, pricePerPerson);
+
+  }
+
+
+ 
+  const destinationInput = document.getElementById('destinationname');
+  const destinationIdInput = document.getElementById('destination-id');
+  const datalist = document.getElementById('destination-list');
+
+  destinationInput.addEventListener('input', function () {
+    const value = this.value;
+    const option = Array.from(datalist.options).find(opt => opt.value === value);
+    if (option) {
+      destinationIdInput.value = option.dataset.id;
+    } else {
+      destinationIdInput.value = '';
+    }
+  });
+  
+  // Function to update the total amount
+function updateTotalAmount(quantity, pricePerPerson) {
+  const totalAmount = quantity * pricePerPerson;
+  document.getElementById("totalAmount").value = `₹ ${totalAmount}`;
+}
+
+// Update the total amount when the quantity is changed
+document.getElementById("quantity").addEventListener("change", function () {
+  const quantity = parseInt(this.value);
+  const pricePerPerson = parseFloat(document.getElementById("pricePerPerson").value);
+  updateTotalAmount(quantity, pricePerPerson);
+});
+  </script>
+            {% if messages %}
+            <div>
+                <script type="text/javascript">
+                 {% for message in messages %}
+                var userMessage= "";
+                var messageType="{{ message.tags }}";
+                userMessage +="{{message}} \n";
+                {% endfor %}
+
+                alert(userMessage);
+                if(messageType=="success")
+                {
+                window.location.href="{% url 'home' %}";
+            }
+        </script>
+      </div>
+      {% endif %}
+  {% endblock %}
+  {% block footer %}
+  {% endblock %}

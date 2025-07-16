@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/activities.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+  <header>
+    <h1>Adventure & Cultural Activities</h1>
+  </header>
+  <section class="activity-container">
+    <div class="activity-card">
+      <h2>Trekking</h2>
+      <p>Experience thrilling treks across the Himalayas, Western Ghats, and Northeast India.</p>
+    </div>
+    <div class="activity-card">
+      <h2>Water Sports</h2>
+      <p>Enjoy parasailing, scuba diving, snorkeling, and kayaking in Goa, Andaman, and Lakshadweep.</p>
+    </div>
+    <div class="activity-card">
+      <h2>Wildlife Safari</h2>
+      <p>Spot tigers, leopards, and elephants in Ranthambore, Jim Corbett, and Bandipur.</p>
+    </div>
+    <div class="activity-card">
+      <h2>Yoga & Meditation</h2>
+      <p>Find inner peace in Rishikesh, Varanasi, or Kerala’s tranquil ashrams.</p>
+    </div>
+    <div class="activity-card">
+      <h2>Cultural Tours</h2>
+      <p>Explore forts, temples, and heritage villages across Rajasthan and Tamil Nadu.</p>
+    </div>
+  </section>
+</body>
+</html>
+{% endblock %}

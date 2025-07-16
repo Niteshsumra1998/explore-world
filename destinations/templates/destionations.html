@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/destinations.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<form method="get" class="search-form">
+  {% csrf_token %}
+  <input type="text" name="q" placeholder="Search destinations..." value="{{ request.GET.q }}">
+  <button type="submit">Search</button>
+</form>
+<h1 class="section-title">Top Destinations in India</h1>
+
+<div class="destinations-container">
+
+    {% for destid,destname,destdesc,destprice,destimage in destall %}
+    <div class="destination-card">
+      <form method="post">
+        {% csrf_token %}
+      <img src="{% static 'images/' %}{{ destimage }}" alt="{{ destname }}">
+      <h3>{{destname}}</h3>
+      <p>{{destdesc}}</p>
+      <p>₹ {{destprice}}</p>
+      <input type="hidden" value="{{ destid }}" name="desid" />
+      <input type="hidden" value="{{ destname }}" name="desnm" />
+      <input type="hidden" value="{{ destdesc }}" name="desd" />
+      <input type="hidden" value="{{ destimage }}" name="desim" />
+      <input type="submit" class="view-btn" value="View More"/>
+      </form>
+    </div>
+    {% endfor %}
+    
+ 
+  </div>
+
+{% endblock %}

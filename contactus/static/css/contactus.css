@@ -1,0 +1,85 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    margin-top: 100px;
+    background: linear-gradient(to right, #fffaf0, #fef6e4);
+    color: #3c2f2f;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px 20px;
+    background-image: url('https://images.unsplash.com/photo-1576485436509-1fefb2f4700c');
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-box {
+    background: #fff8f0;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.contact-box h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 32px;
+    color: #8b4513;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.contact-box p {
+    text-align: center;
+    color: #5c4a3b;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #5c4a3b;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbb99c;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fffdf8;
+    color: #3c2f2f;
+}
+
+input:focus, textarea:focus {
+    border-color: #a67c52;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #8b4513;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a0522d;
+}

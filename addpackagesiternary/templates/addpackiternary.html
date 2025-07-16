@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form method="post">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4">
+
+        <div class="modal-header bg-gradient text-white" style="background: linear-gradient(45deg, #0d6efd, #6610f2); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-geo-alt-fill me-2"></i>New Packages Itinerary</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="destinationname" class="form-label">Destination Name:</label>
+            <input type="text" class="form-control bg-light" id="destinationname" name="dname" list="destination-list" required>
+           
+            <!-- Datalist shows name, but saves ID -->
+            <datalist id="destination-list">
+            {% for destid,destname in destidnm %}
+                <option data-id="{{ destid }}" value="{{ destname }}"></option>
+            {% endfor %}
+            </datalist>
+            <input type="hidden" id="destination-id" name="destination_id">
+        </div>
+
+          <div class="mb-3">
+            <label for="travel" class="form-label">Travel Method:</label>
+            <select class="form-select bg-light" id="travel" name="travel" required>
+              <option value="">Select Travel Method</option>
+              <option value="Bus">Bus</option>
+              <option value="Train">Train</option>
+              <option value="Flight">Flight</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="stay" class="form-label">Stay Option:</label>
+            <select class="form-select bg-light" id="stay" name="stay" required>
+              <option value="">Select Stay Option</option>
+              <option value="Budget Friendly">Budget Friendly</option>
+              <option value="Standard">Standard</option>
+              <option value="Luxury">Luxury</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="packagesprice" class="form-label">Price (Per Person):</label>
+            <input type="number" class="form-control bg-light" id="pprice" name="pprice" required>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Submit Package" />
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    var modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    modal.show();
+
+    document.getElementById('exampleModal').addEventListener('hidden.bs.modal', function () {
+      window.location.href = document.referrer;
+    });
+  });
+
+  const destinationInput = document.getElementById('destinationname');
+  const destinationIdInput = document.getElementById('destination-id');
+  const datalist = document.getElementById('destination-list');
+
+  destinationInput.addEventListener('input', function () {
+    const value = this.value;
+    const option = Array.from(datalist.options).find(opt => opt.value === value);
+    if (option) {
+      destinationIdInput.value = option.dataset.id;
+    } else {
+      destinationIdInput.value = '';
+    }
+  });
+  
+</script>
+
+{% if messages %}
+<div>
+  <script type="text/javascript">
+    {% for message in messages %}
+      var userMessage = "";
+      var messageType = "{{ message.tags }}";
+      userMessage += "{{ message }}\n";
+    {% endfor %}
+
+    alert(userMessage);
+    if (messageType == "success") {
+      window.location.href = "{% url 'home' %}";
+    }
+  </script>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

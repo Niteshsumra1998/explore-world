@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Create Your Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="username" pattern="[A-Za-z]+" title="Only letters are allowed" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Sign Up</button>
+            <p>
+                Already have an account?
+                <a href="{% url 'loginpage' %}">Login here</a>
+            </p>
+        </form>
+        {% if messages %}
+        <script>
+            {% for message in messages %}
+            var userMessage = "{{ message }}";
+            var messageType = "{{ message.tags }}";
+            alert(userMessage);
+            if (messageType === "success") {
+                window.location.href = "{% url 'home' %}";
+            }
+            {% endfor %}
+        </script>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

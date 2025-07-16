@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/package.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Explore Our Travel Packages</h1>
+
+<div class="packages-container">
+
+  {% for packid,packname,packdesc,packprice,packimage in packageall %}
+  <div class="package-card">
+    <img src="{% static 'images/' %}{{ packimage }}" alt="{{ packname }}">
+    <h3>{{packname}}</h3>
+    <p>{{packdesc}}</p>
+    <p> ₹ {{packprice}}</p>
+    <a href="#" class="book-btn">View Details</a>
+  </div>
+  {% endfor %}
+  
+
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/blogs.css' %}">
+{% endblock %}
+
+{% block content %}
+<title>Blog | Explore India</title>
+<section class="blog-header">
+  <h1>Divine India: Proud Moments & Timeless Culture</h1>
+  <p>Explore the divine roots, ancient history, and spiritual destinations of India.</p>
+</section>
+
+<section class="blog-section">
+  <h2>🕉️ Divine Legends</h2>
+
+  <div class="blog-card">
+    <img src="{% static 'images/ram1.jpg' %}" alt="Lord Ram">
+    <h3>Shri Ram</h3>
+    <p>The ideal king, warrior, and embodiment of dharma.</p>
+  </div>
+  <div class="blog-card">
+    <img src="{% static 'images/hanuman1.jpg' %}" alt="Hanuman">
+    <h3>Hanuman Ji</h3>
+    <p>Devotion, strength, and loyalty personified.</p>
+  </div>
+  <div class="blog-card">
+    <img src="{% static 'images/shivji1.jpg' %}" alt="Shiv Ji">
+    <h3>Shiv Ji</h3>
+    <p>Destroyer of evil and lord of transformation.</p>
+  </div>
+  <div class="blog-card">
+    <img src="{% static 'images/krishna.jpg' %}" alt="Krishna">
+    <h3>Krishna Ji</h3>
+    <p>The divine lover, guide, and philosopher of the Bhagavad Gita.</p>
+  </div>
+  <div class="blog-card">
+    <img src="{% static 'images/mataji.jpg' %}" alt="Mataji">
+    <h3>Mataji</h3>
+    <p>The nurturing mother goddess in her many forms: Durga, Lakshmi, Saraswati.</p>
+  </div>
+</section>
+
+<section class="blog-section">
+  <h2>📜 From the Vedas</h2>
+  <p><em>“Let noble thoughts come to us from every side.”</em> - Rigveda</p>
+  <p>The Vedas are the foundation of Indian knowledge and culture, guiding humanity with ancient wisdom.</p>
+</section>
+
+<section class="blog-section">
+  <h2>🏛️ Ancient Civilizations: Mohenjo-daro & Harappa</h2>
+  <p>Currently located in present-day Pakistan, Mohenjo-daro was one of India's oldest civilizations dating back to 2500 BCE. If this region ever becomes part of India again in the future, it would be a must-visit to witness this remarkable piece of ancient history.</p>
+  <img src="{% static 'images/Mohenjo-daro.jpg' %}" alt="Mohenjo-daro">
+</section>
+
+<section class="blog-section">
+  <h2>🌍 Cultural Tourism in India</h2>
+  <ul>
+    <li>Temples of Tamil Nadu and Odisha</li>
+    <li>Ghats and Aarti of Varanasi</li>
+    <li>Yoga and peace in Rishikesh</li>
+    <li>Char Dham Yatra: Badrinath, Kedarnath, Gangotri, Yamunotri</li>
+    <li>Jyotirlingas - The 12 sacred abodes of Shiva</li>
+    <li>Celebrations like Diwali, Holi, and Kumbh Mela</li>
+  </ul>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".blog-card");
+    const bellSound = new Audio("{% static 'audio/bell.mp3' %}");
+    let currentIndex = -1;
+
+    cards.forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        card.classList.add("glow");
+        bellSound.currentTime = 0; // rewind
+        bellSound.play();
+      });
+      card.addEventListener("mouseleave", () => {
+        card.classList.remove("glow");
+      });
+    });
+
+    setInterval(() => {
+      cards.forEach(card => card.classList.remove("glow"));
+      currentIndex = (currentIndex + 1) % cards.length;
+      cards[currentIndex].classList.add("glow");
+    }, 3000);
+  });
+</script>
+{% endblock %}

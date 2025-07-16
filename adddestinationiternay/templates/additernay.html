@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4">
+        
+        <div class="modal-header bg-gradient text-white" style="background: linear-gradient(45deg, #0d6efd, #6610f2); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-geo-alt-fill me-2"></i>Add New Destination Iternary</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+        
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="destinationname" class="form-label">Destination Name:</label>
+                <input type="text" class="form-control bg-light" id="destinationname" name="dname" list="destination-list" required>
+               
+                <datalist id="destination-list">
+                {% for destid,destname in destidnm %}
+                    <option data-id="{{ destid }}" value="{{ destname }}"></option>
+                {% endfor %}
+                </datalist>
+                <input type="hidden" id="destination-id" name="destination_id">
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Select Tour Days:</label>
+                <select id="quantity" name="quantity" onchange="generateInputs()" class="form-control bg-light">
+                  <option value="0">-- Select --</option>
+                  {% for i in quantity_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
+            </div>
+            <div id="input-container">
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" href="{% url 'home' %}">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save Destination" />
+        </div>
+      </div>
+    </div>
+</form>
+  </div>
+  
+    <script type="text/javascript">
+document.addEventListener("DOMContentLoaded",function(){
+        var modal=new bootstrap.Modal(document.getElementById("exampleModal"));
+        modal.show();
+        document.getElementById('exampleModal').addEventListener
+        ('hidden.bs.modal',function(){
+          window.location.href=document.referrer;
+        });
+    });
+
+    function generateInputs() {
+    const quantity = document.getElementById("quantity").value;
+    const container = document.getElementById("input-container");
+    container.innerHTML = ""; // Clear old inputs
+
+    for (let i = 1; i <= quantity; i++) {
+      const inputGroup = document.createElement("div");
+      inputGroup.class="mb-3";
+      inputGroup.innerHTML = `
+        <label for="feature${i}" class="form-label">Feature ${i}:</label>
+        <input type="text" name="feature${i}" id="feature${i}" class="form-control" required>
+      `;
+      container.appendChild(inputGroup);
+    }
+  }
+
+  const destinationInput = document.getElementById('destinationname');
+  const destinationIdInput = document.getElementById('destination-id');
+  const datalist = document.getElementById('destination-list');
+
+  destinationInput.addEventListener('input', function () {
+    const value = this.value;
+    const option = Array.from(datalist.options).find(opt => opt.value === value);
+    if (option) {
+      destinationIdInput.value = option.dataset.id;
+    } else {
+      destinationIdInput.value = '';
+    }
+  });
+  
+  </script>
+            {% if messages %}
+            <div>
+                <script type="text/javascript">
+                 {% for message in messages %}
+                var userMessage= "";
+                var messageType="{{ message.tags }}";
+                userMessage +="{{message}} \n";
+                {% endfor %}
+
+                alert(userMessage);
+                if(messageType=="success")
+                {
+                window.location.href="{% url 'home' %}";
+            }
+        </script>
+      </div>
+      {% endif %}
+  {% endblock %}
+  {% block footer %}
+  {% endblock %}

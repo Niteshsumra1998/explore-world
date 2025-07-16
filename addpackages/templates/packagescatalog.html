@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4">
+        
+        <div class="modal-header bg-gradient text-white" style="background: linear-gradient(45deg, #0d6efd, #6610f2); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-geo-alt-fill me-2"></i>New Packages</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+        
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="packagesname" class="form-label">Package Name:</label>
+              <input type="text" class="form-control bg-light" id="packagesname" name="pname" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Packages Description:</label>
+              <textarea class="form-control bg-light" id="description" name="pdesc" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="packagesimage" class="form-label">Image URL:</label>
+              <input type="text" class="form-control bg-light" id="packagesimage" name="pimage" required>
+            </div>
+            <div class="mb-3">
+              <label for="packagesprice" class="form-label">Price (Per Person):</label>
+              <input type="number" class="form-control bg-light" id="packagesprice" name="pprice" required>
+            </div>
+       
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" href="{% url 'home' %}">Close</button>
+          <input type="submit" class="btn btn-primary" value="packages" />
+        </div>
+      </div>
+    </div>
+</form>
+  </div>
+  
+    <script type="text/javascript">
+document.addEventListener("DOMContentLoaded",function(){
+        var modal=new bootstrap.Modal(document.getElementById("exampleModal"));
+        modal.show();
+        document.getElementById('exampleModal').addEventListener
+        ('hidden.bs.modal',function(){
+          window.location.href=document.referrer;
+        });
+    });
+  </script>
+            {% if messages %}
+            <div>
+                <script type="text/javascript">
+                 {% for message in messages %}
+                var userMessage= "";
+                var messageType="{{ message.tags }}";
+                userMessage +="{{message}} \n";
+                {% endfor %}
+
+                alert(userMessage);
+                if(messageType=="success")
+                {
+                window.location.href="{% url 'home' %}";
+            }
+        </script>
+      </div>
+      {% endif %}
+  {% endblock %}
+  {% block footer %}
+  {% endblock %}
